@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragati Kesherwani | Portfolio</title>
+    <meta name="description" content="Portfolio of Pragati Kesherwani - CSE Student, AI & ML Enthusiast, UI/UX Designer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="cursor-glow"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-logo">P<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">✦ Welcome to my universe</div>
+                <h1 class="hero-name">
+                    <span class="line line-1">Pragati</span>
+                    <span class="line line-2">Kesherwani</span>
+                </h1>
+                <p class="hero-tagline">
+                    <span class="tag">CSE Student</span>
+                    <span class="divider">|</span>
+                    <span class="tag">AI & ML Enthusiast</span>
+                    <span class="divider">|</span>
+                    <span class="tag">UI/UX Designer</span>
+                </p>
+                <p class="hero-quote">"Creating smart solutions with creativity and technology."</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-avatar-wrapper">
+                <div class="avatar-container" id="avatar-3d">
+                    <div class="avatar-ring ring-1"></div>
+                    <div class="avatar-ring ring-2"></div>
+                    <div class="avatar-ring ring-3"></div>
+                    <img src="avatar.jpg" alt="Pragati Kesherwani" class="avatar-img">
+                    <div class="avatar-glow"></div>
+                </div>
+                <div class="floating-badge badge-1"><i class="fab fa-python"></i></div>
+                <div class="floating-badge badge-2"><i class="fab fa-html5"></i></div>
+                <div class="floating-badge badge-3"><i class="fab fa-figma"></i></div>
+                <div class="floating-badge badge-4"><i class="fab fa-js"></i></div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">01</span>
+                <h2 class="section-title">About <span>Me</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-card glass-card" data-tilt>
+                    <div class="about-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h3>Who I Am</h3>
+                    <p>I am Pragati Kesherwani, a Computer Science student at Swami Vivekanand Group of Institutes. I am passionate about Artificial Intelligence and Machine Learning, with a strong interest in UI/UX design.</p>
+                </div>
+                <div class="about-card glass-card" data-tilt>
+                    <div class="about-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>My Philosophy</h3>
+                    <p>I believe in smart work over hard work, and I enjoy creating modern, user-friendly, and visually appealing web experiences. I love exploring new technologies and continuously improving my skills.</p>
+                </div>
+                <div class="about-card glass-card" data-tilt>
+                    <div class="about-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>My Goals</h3>
+                    <p><strong>Short-term:</strong> Improve JavaScript and backend skills.<br><strong>Long-term:</strong> Become a skilled AI/ML Engineer and build impactful real-world solutions.</p>
+                </div>
+                <div class="about-card glass-card" data-tilt>
+                    <div class="about-icon"><i class="fas fa-book-open"></i></div>
+                    <h3>Currently Learning</h3>
+                    <ul class="learning-list">
+                        <li>JavaScript</li>
+                        <li>Backend Development</li>
+                        <li>Advanced AI/ML Concepts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">02</span>
+                <h2 class="section-title">My <span>Skills</span></h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category glass-card" data-tilt>
+                    <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
+                    <h3>Frontend</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fab fa-html5"></i><span>HTML</span><div class="skill-bar"><div class="skill-fill" data-width="85"></div></div></div>
+                        <div class="skill-item"><i class="fab fa-css3-alt"></i><span>CSS</span><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div></div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card" data-tilt>
+                    <div class="skill-cat-icon"><i class="fas fa-terminal"></i></div>
+                    <h3>Programming</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fab fa-python"></i><span>Python</span><div class="skill-bar"><div class="skill-fill" data-width="60"></div></div></div>
+                        <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span><div class="skill-bar"><div class="skill-fill" data-width="40"></div></div></div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card" data-tilt>
+                    <div class="skill-cat-icon"><i class="fas fa-pen-nib"></i></div>
+                    <h3>Design</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fab fa-figma"></i><span>Figma (UI/UX)</span><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div></div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card" data-tilt>
+                    <div class="skill-cat-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Other</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fas fa-brain"></i><span>Generative AI Tools</span><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">03</span>
+                <h2 class="section-title">My <span>Projects</span></h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card glass-card" data-tilt>
+                    <div class="project-number">01</div>
+                    <div class="project-icon"><i class="fas fa-school"></i></div>
+                    <h3>Camplink</h3>
+                    <p class="project-subtitle">College Management System</p>
+                    <p class="project-desc">A smart system designed to manage college activities efficiently. Simplifying student and admin tasks.</p>
+                    <div class="project-tags">
+                        <span>Frontend</span><span>System Design</span>
+                    </div>
+                </div>
+                <div class="project-card glass-card" data-tilt>
+                    <div class="project-number">02</div>
+                    <div class="project-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Smart Attendance</h3>
+                    <p class="project-subtitle">Intelligent Attendance System</p>
+                    <p class="project-desc">An intelligent system to track and manage student attendance digitally. Focus on accuracy and automation.</p>
+                    <div class="project-tags">
+                        <span>Automation</span><span>Digital</span>
+                    </div>
+                </div>
+                <div class="project-card glass-card" data-tilt>
+                    <div class="project-number">03</div>
+                    <div class="project-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>DOC & AI</h3>
+                    <p class="project-subtitle">Smart OPD System</p>
+                    <p class="project-desc">A hospital-based system designed to improve OPD management using AI. Integrating AI for smarter healthcare solutions.</p>
+                    <div class="project-tags">
+                        <span>AI</span><span>Healthcare</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">04</span>
+                <h2 class="section-title">Get In <span>Touch</span></h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-intro">I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    <div class="contact-links">
+                        <a href="mailto:kesherwanipragati@gmail.com" class="contact-item glass-card">
+                            <i class="fas fa-envelope"></i>
+                            <div><h4>Email</h4><span>kesherwanipragati@gmail.com</span></div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/pragati-kesherwani-b09624379" target="_blank" class="contact-item glass-card">
+                            <i class="fab fa-linkedin"></i>
+                            <div><h4>LinkedIn</h4><span>Pragati Kesherwani</span></div>
+                        </a>
+                        <a href="https://github.com/rajni12071985-debug" target="_blank" class="contact-item glass-card">
+                            <i class="fab fa-github"></i>
+                            <div><h4>GitHub</h4><span>rajni12071985-debug</span></div>
+                        </a>
+                        <a href="https://www.instagram.com/itsp_rag" target="_blank" class="contact-item glass-card">
+                            <i class="fab fa-instagram"></i>
+                            <div><h4>Instagram</h4><span>@itsp_rag</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-quote">"Creating smart solutions with creativity and technology."</p>
+            <p>&copy; 2026 Pragati Kesherwani. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
