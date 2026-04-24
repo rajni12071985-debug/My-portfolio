@@ -1,197 +1,232 @@
-/* ===== 3D Particle Background (Canvas) ===== */
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+// ===== THREE.JS 3D BACKGROUND =====
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+camera.position.z = 30;
 
-let particles = [];
-let mouse = { x: -500, y: -500 };
-let width, height;
-
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-class Particle {
-    constructor() {
-        this.reset();
-    }
-    reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.z = Math.random() * 1.5 + 0.5;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.radius = Math.random() * 1.8 + 0.4;
-        this.alpha = Math.random() * 0.4 + 0.1;
-        const colors = ['124,58,237', '168,85,247', '6,182,212', '192,132,252'];
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-    }
-    update() {
-        this.x += this.vx * this.z;
-        this.y += this.vy * this.z;
-        // Mouse repulsion
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-            const force = (150 - dist) / 150;
-            this.x += (dx / dist) * force * 2;
-            this.y += (dy / dist) * force * 2;
-        }
-        if (this.x < -10 || this.x > width + 10 || this.y < -10 || this.y > height + 10) {
-            this.reset();
-        }
-    }
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius * this.z, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
-        ctx.fill();
-    }
-}
-
-// Create particles
-for (let i = 0; i < 120; i++) {
-    particles.push(new Particle());
-}
-
-function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 130) {
-                const alpha = (1 - dist / 130) * 0.12;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.strokeStyle = `rgba(124,58,237,${alpha})`;
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-            }
-        }
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    drawConnections();
-    requestAnimationFrame(animate);
-}
-animate();
-
-/* ===== Cursor Glow ===== */
-const cursorGlow = document.getElementById('cursor-glow');
-document.addEventListener('mousemove', (e) => {
+// Mouse tracking
+const mouse = { x: 0, y: 0, nx: 0, ny: 0 };
+document.addEventListener('mousemove', e => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-    cursorGlow.style.left = e.clientX + 'px';
-    cursorGlow.style.top = e.clientY + 'px';
+    mouse.nx = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.ny = -(e.clientY / window.innerHeight) * 2 + 1;
+    // Cursor glow
+    const g = document.getElementById('cursor-glow');
+    if (g) { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; }
 });
 
-/* ===== Navbar Scroll ===== */
+// Materials
+const purpleMat = new THREE.MeshBasicMaterial({ color: 0x7c3aed, wireframe: true, transparent: true, opacity: 0.12 });
+const cyanMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, wireframe: true, transparent: true, opacity: 0.1 });
+const pinkMat = new THREE.MeshBasicMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.08 });
+
+// Geometries - floating 3D shapes
+const shapes = [];
+function addShape(geo, mat, pos, rotSpeed) {
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(pos.x, pos.y, pos.z);
+    mesh.userData = { rotSpeed, origY: pos.y, phase: Math.random() * Math.PI * 2 };
+    scene.add(mesh);
+    shapes.push(mesh);
+}
+
+// Torus
+addShape(new THREE.TorusGeometry(3, 0.8, 16, 50), purpleMat, { x: -18, y: 8, z: -10 }, { x: 0.003, y: 0.005 });
+addShape(new THREE.TorusGeometry(2, 0.5, 16, 40), cyanMat, { x: 20, y: -6, z: -15 }, { x: 0.004, y: 0.003 });
+// Icosahedron
+addShape(new THREE.IcosahedronGeometry(2.5, 0), pinkMat, { x: 15, y: 10, z: -8 }, { x: 0.005, y: 0.004 });
+addShape(new THREE.IcosahedronGeometry(1.8, 0), purpleMat, { x: -14, y: -8, z: -12 }, { x: 0.003, y: 0.006 });
+// Octahedron
+addShape(new THREE.OctahedronGeometry(2, 0), cyanMat, { x: -8, y: 14, z: -18 }, { x: 0.006, y: 0.003 });
+addShape(new THREE.OctahedronGeometry(1.5, 0), pinkMat, { x: 22, y: 2, z: -20 }, { x: 0.004, y: 0.005 });
+// Dodecahedron
+addShape(new THREE.DodecahedronGeometry(2, 0), purpleMat, { x: 0, y: -12, z: -14 }, { x: 0.005, y: 0.002 });
+addShape(new THREE.DodecahedronGeometry(1.5, 0), cyanMat, { x: -20, y: 0, z: -22 }, { x: 0.003, y: 0.004 });
+// Torus Knot
+addShape(new THREE.TorusKnotGeometry(2, 0.4, 60, 8), pinkMat, { x: 10, y: -14, z: -16 }, { x: 0.002, y: 0.003 });
+
+// Particle field
+const particleCount = 300;
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(particleCount * 3);
+for (let i = 0; i < particleCount * 3; i++) {
+    pPos[i] = (Math.random() - 0.5) * 80;
+}
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({ color: 0x7c3aed, size: 0.08, transparent: true, opacity: 0.5 });
+const particleSystem = new THREE.Points(pGeo, pMat);
+scene.add(particleSystem);
+
+// Scroll offset
+let scrollY = 0;
+window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+// Animation loop
+const clock = new THREE.Clock();
+function animate3D() {
+    requestAnimationFrame(animate3D);
+    const t = clock.getElapsedTime();
+
+    // Rotate shapes + floating motion
+    shapes.forEach(s => {
+        s.rotation.x += s.userData.rotSpeed.x;
+        s.rotation.y += s.userData.rotSpeed.y;
+        s.position.y = s.userData.origY + Math.sin(t + s.userData.phase) * 1.5;
+    });
+
+    // Mouse parallax on camera
+    camera.position.x += (mouse.nx * 3 - camera.position.x) * 0.02;
+    camera.position.y += (mouse.ny * 2 - camera.position.y) * 0.02;
+
+    // Scroll parallax
+    camera.rotation.x = scrollY * 0.0001;
+    particleSystem.rotation.y = t * 0.02;
+    particleSystem.rotation.x = t * 0.01;
+
+    renderer.render(scene, camera);
+}
+animate3D();
+
+// Resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ===== LOADER =====
+window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 800);
+});
+
+// ===== NAVBAR =====
 const navbar = document.getElementById('navbar');
 const navLinks = document.querySelectorAll('.nav-links a');
 const sections = document.querySelectorAll('section');
 
 window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
-
-    // Active link
     let current = '';
-    sections.forEach(sec => {
-        const top = sec.offsetTop - 120;
-        if (window.scrollY >= top) current = sec.getAttribute('id');
-    });
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
     navLinks.forEach(a => {
-        a.classList.remove('active');
-        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
     });
 });
 
-/* ===== Mobile Nav Toggle ===== */
+// Mobile menu
 const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.querySelector('.nav-links');
-
 navToggle.addEventListener('click', () => {
     navToggle.classList.toggle('open');
     navMenu.classList.toggle('open');
 });
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navToggle.classList.remove('open');
+    navMenu.classList.remove('open');
+}));
 
-navMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-        navToggle.classList.remove('open');
-        navMenu.classList.remove('open');
-    });
-});
-
-/* ===== 3D Tilt Effect ===== */
-document.querySelectorAll('[data-tilt]').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -6;
-        const rotateY = ((x - centerX) / centerX) * 6;
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+// ===== 3D CARD TILT =====
+document.querySelectorAll('.card-3d').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const rx = ((y - r.height / 2) / r.height) * -10;
+        const ry = ((x - r.width / 2) / r.width) * 10;
+        card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.03,1.03,1.03)`;
+        // Move shine
+        const shine = card.querySelector('.card-shine');
+        if (shine) {
+            shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(124,58,237,0.08) 0%, transparent 60%)`;
+        }
     });
     card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+        card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+        const shine = card.querySelector('.card-shine');
+        if (shine) shine.style.background = '';
     });
 });
 
-/* ===== 3D Avatar Parallax ===== */
-const avatarContainer = document.getElementById('avatar-3d');
-if (avatarContainer) {
-    document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        avatarContainer.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${-y}deg)`;
+// ===== 3D AVATAR PARALLAX =====
+const avatar3d = document.getElementById('avatar-3d');
+if (avatar3d) {
+    document.addEventListener('mousemove', e => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 25;
+        const y = (e.clientY / window.innerHeight - 0.5) * 25;
+        avatar3d.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg)`;
     });
 }
 
-/* ===== Scroll Reveal ===== */
-const revealElements = document.querySelectorAll('.about-card, .skill-category, .project-card, .contact-item, .section-header');
-revealElements.forEach(el => el.classList.add('reveal'));
-
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 100);
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.15 });
-
-revealElements.forEach(el => revealObserver.observe(el));
-
-/* ===== Skill Bar Animation ===== */
-const skillObserver = new IntersectionObserver((entries) => {
+// ===== SCROLL REVEAL =====
+const animEls = document.querySelectorAll('[data-animate]');
+const revealObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.skill-fill').forEach(bar => {
-                bar.style.width = bar.getAttribute('data-width') + '%';
+            const delay = parseInt(entry.target.dataset.delay || 0);
+            setTimeout(() => entry.target.classList.add('visible'), delay);
+            revealObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+animEls.forEach(el => revealObs.observe(el));
+
+// ===== SKILL BARS (MOBILE) =====
+const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.sbi-fill').forEach(b => {
+                b.style.width = b.dataset.width + '%';
             });
-            skillObserver.unobserve(entry.target);
+            skillObs.unobserve(entry.target);
         }
     });
 }, { threshold: 0.3 });
+document.querySelectorAll('.skills-bars-mobile').forEach(el => skillObs.observe(el));
 
-document.querySelectorAll('.skill-category').forEach(cat => skillObserver.observe(cat));
-
-/* ===== Smooth scroll for anchor links ===== */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+// ===== ANIMATED COUNTERS =====
+function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    if (!target) return;
+    const duration = 2000; // 2 seconds
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for smooth deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.textContent = current.toLocaleString();
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            el.textContent = target.toLocaleString();
+        }
+    }
+    requestAnimationFrame(update);
+}
+
+// Observe all counter elements (hero stats + experience counters)
+const counterEls = document.querySelectorAll('.stat-num[data-count], .counter-value[data-count]');
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // Small delay to let the fade-in animation start first
+            setTimeout(() => animateCounter(entry.target), 300);
+            counterObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+counterEls.forEach(el => counterObs.observe(el));

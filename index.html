@@ -3,223 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragati Kesherwani | Portfolio</title>
-    <meta name="description" content="Portfolio of Pragati Kesherwani - CSE Student, AI & ML Enthusiast, UI/UX Designer">
+    <title>Ram Kumar Kesherwani | Senior Computer Science Teacher</title>
+    <meta name="description" content="Portfolio of Ram Kumar Kesherwani - Senior Computer Science Teacher with 25+ years of experience at SVM Inter College, Prayagraj. Educator, Mentor, Technology Expert.">
+    <meta name="keywords" content="Ram Kumar Kesherwani, Computer Science Teacher, SVM Inter College, Prayagraj, Educator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <!-- Three.js for 3D particle background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+    <!-- 3D Canvas Background -->
+    <canvas id="three-canvas"></canvas>
     <div id="cursor-glow"></div>
-    <canvas id="bg-canvas"></canvas>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-ring"></div>
+            <div class="loader-ring loader-ring-2"></div>
+            <p>Loading 3D Experience...</p>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="nav-logo">P<span>.</span></div>
+        <div class="nav-logo">RK<span>.</span></div>
         <ul class="nav-links">
             <li><a href="#hero" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ====== HERO SECTION ====== -->
     <section id="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-badge">✦ Welcome to my universe</div>
-                <h1 class="hero-name">
-                    <span class="line line-1">Pragati</span>
+                <div class="hero-badge" data-animate="fade-up" data-delay="0">
+                    <span class="badge-dot"></span> 25+ Years of Excellence in Education
+                </div>
+                <h1 class="hero-name" data-animate="fade-up" data-delay="200">
+                    <span class="line line-1">Ram Kumar</span>
                     <span class="line line-2">Kesherwani</span>
                 </h1>
-                <p class="hero-tagline">
-                    <span class="tag">CSE Student</span>
-                    <span class="divider">|</span>
-                    <span class="tag">AI & ML Enthusiast</span>
-                    <span class="divider">|</span>
-                    <span class="tag">UI/UX Designer</span>
+                <div class="hero-tagline" data-animate="fade-up" data-delay="400">
+                    <span class="tag"><i class="fas fa-chalkboard-teacher"></i> Senior CS Teacher</span>
+                    <span class="tag"><i class="fas fa-graduation-cap"></i> Educator</span>
+                    <span class="tag"><i class="fas fa-hands-helping"></i> Mentor</span>
+                </div>
+                <p class="hero-quote" data-animate="fade-up" data-delay="600">
+                    "Empowering generations through knowledge, technology, and dedicated mentorship."
                 </p>
-                <p class="hero-quote">"Creating smart solutions with creativity and technology."</p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                <div class="hero-cta" data-animate="fade-up" data-delay="800">
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Contact Me</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#about" class="btn btn-outline">
+                        <span>View Profile</span>
+                    </a>
+                </div>
+                <!-- Stats row -->
+                <div class="hero-stats" data-animate="fade-up" data-delay="1000">
+                    <div class="stat-item">
+                        <span class="stat-num" data-count="25">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">Years Exp.</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" data-count="1000">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">Students Taught</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num" data-count="3">0</span>
+                        <span class="stat-label">Qualifications</span>
+                    </div>
                 </div>
             </div>
-            <div class="hero-avatar-wrapper">
-                <div class="avatar-container" id="avatar-3d">
-                    <div class="avatar-ring ring-1"></div>
-                    <div class="avatar-ring ring-2"></div>
-                    <div class="avatar-ring ring-3"></div>
-                    <img src="avatar.jpg" alt="Pragati Kesherwani" class="avatar-img">
-                    <div class="avatar-glow"></div>
+            <div class="hero-3d-wrapper" data-animate="fade-scale" data-delay="300">
+                <div class="avatar-scene">
+                    <!-- Orbiting rings -->
+                    <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+                    <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+                    <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
+                    <!-- Avatar -->
+                    <div class="avatar-3d" id="avatar-3d">
+                        <img src="avatar.jpg" alt="Ram Kumar Kesherwani" class="avatar-img">
+                        <div class="avatar-glow-ring"></div>
+                    </div>
+                    <!-- Floating icons -->
+                    <div class="float-icon fi-1" data-speed="1.2"><i class="fas fa-laptop-code"></i></div>
+                    <div class="float-icon fi-2" data-speed="0.8"><i class="fas fa-book"></i></div>
+                    <div class="float-icon fi-3" data-speed="1.5"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="float-icon fi-4" data-speed="1.0"><i class="fas fa-chalkboard"></i></div>
+                    <div class="float-icon fi-5" data-speed="0.6"><i class="fas fa-desktop"></i></div>
+                    <div class="float-icon fi-6" data-speed="1.3"><i class="fas fa-lightbulb"></i></div>
                 </div>
-                <div class="floating-badge badge-1"><i class="fab fa-python"></i></div>
-                <div class="floating-badge badge-2"><i class="fab fa-html5"></i></div>
-                <div class="floating-badge badge-3"><i class="fab fa-figma"></i></div>
-                <div class="floating-badge badge-4"><i class="fab fa-js"></i></div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <span>Scroll Down</span>
-            <div class="scroll-arrow"></div>
+        <div class="scroll-indicator" data-animate="fade-up" data-delay="1200">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ====== ABOUT SECTION ====== -->
     <section id="about">
         <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">01</span>
-                <h2 class="section-title">About <span>Me</span></h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-number">01</span>
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+                <p class="section-subtitle">Passionate Educator. Lifelong Learner. Dedicated Mentor.</p>
             </div>
             <div class="about-grid">
-                <div class="about-card glass-card" data-tilt>
-                    <div class="about-icon"><i class="fas fa-user-graduate"></i></div>
+                <div class="about-card card-3d" data-animate="fade-up" data-delay="0">
+                    <div class="card-shine"></div>
+                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
                     <h3>Who I Am</h3>
-                    <p>I am Pragati Kesherwani, a Computer Science student at Swami Vivekanand Group of Institutes. I am passionate about Artificial Intelligence and Machine Learning, with a strong interest in UI/UX design.</p>
+                    <p>A passionate educator with <strong>25+ years of experience</strong> in teaching Computer Science. Dedicated to building strong technical foundations in every student I teach.</p>
                 </div>
-                <div class="about-card glass-card" data-tilt>
-                    <div class="about-icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3>My Philosophy</h3>
-                    <p>I believe in smart work over hard work, and I enjoy creating modern, user-friendly, and visually appealing web experiences. I love exploring new technologies and continuously improving my skills.</p>
+                <div class="about-card card-3d" data-animate="fade-up" data-delay="100">
+                    <div class="card-shine"></div>
+                    <div class="card-icon"><i class="fas fa-heart"></i></div>
+                    <h3>My Passion</h3>
+                    <p>I believe that every student has the potential to excel. My mission is to simplify complex topics and make learning Computer Science an enjoyable journey.</p>
                 </div>
-                <div class="about-card glass-card" data-tilt>
-                    <div class="about-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>My Goals</h3>
-                    <p><strong>Short-term:</strong> Improve JavaScript and backend skills.<br><strong>Long-term:</strong> Become a skilled AI/ML Engineer and build impactful real-world solutions.</p>
+                <div class="about-card card-3d" data-animate="fade-up" data-delay="200">
+                    <div class="card-shine"></div>
+                    <div class="card-icon"><i class="fas fa-award"></i></div>
+                    <h3>Qualifications</h3>
+                    <ul class="qualification-list">
+                        <li><span class="q-badge">MA</span> Master of Arts</li>
+                        <li><span class="q-badge">PGDCA</span> Post Graduate Diploma in Computer Applications</li>
+                        <li><span class="q-badge">D.El.Ed</span> Diploma in Elementary Education</li>
+                    </ul>
                 </div>
-                <div class="about-card glass-card" data-tilt>
-                    <div class="about-icon"><i class="fas fa-book-open"></i></div>
-                    <h3>Currently Learning</h3>
+                <div class="about-card card-3d" data-animate="fade-up" data-delay="300">
+                    <div class="card-shine"></div>
+                    <div class="card-icon"><i class="fas fa-star"></i></div>
+                    <h3>What Sets Me Apart</h3>
                     <ul class="learning-list">
-                        <li>JavaScript</li>
-                        <li>Backend Development</li>
-                        <li>Advanced AI/ML Concepts</li>
+                        <li><span class="dot"></span>Strong focus on practical learning</li>
+                        <li><span class="dot"></span>Taught multiple generations</li>
+                        <li><span class="dot"></span>Expertise in fundamentals</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- ====== EXPERIENCE SECTION ====== -->
+    <section id="experience">
+        <div class="section-container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-number">02</span>
+                <h2 class="section-title">My <span class="gradient-text">Experience</span></h2>
+                <p class="section-subtitle">A journey of shaping minds and building futures</p>
+            </div>
+            <div class="experience-showcase">
+                <div class="exp-timeline">
+                    <div class="exp-card card-3d" data-animate="fade-up" data-delay="0">
+                        <div class="card-shine"></div>
+                        <div class="exp-header">
+                            <div class="exp-icon-wrap">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div class="exp-meta">
+                                <span class="exp-duration">25+ Years</span>
+                                <span class="exp-current">Current Position</span>
+                            </div>
+                        </div>
+                        <h3 class="exp-title">Senior Computer Science Teacher</h3>
+                        <h4 class="exp-company"><i class="fas fa-map-marker-alt"></i> SVM Inter College, Prayagraj</h4>
+                        <div class="exp-highlights">
+                            <div class="exp-highlight-item">
+                                <div class="highlight-icon"><i class="fas fa-users"></i></div>
+                                <div class="highlight-text">
+                                    <h5>Multiple Generations</h5>
+                                    <p>Taught and mentored thousands of students over 25+ years, guiding them towards academic and career success.</p>
+                                </div>
+                            </div>
+                            <div class="exp-highlight-item">
+                                <div class="highlight-icon"><i class="fas fa-laptop-code"></i></div>
+                                <div class="highlight-text">
+                                    <h5>Practical Learning Focus</h5>
+                                    <p>Strong emphasis on hands-on practical computer training, ensuring students gain real-world skills alongside theory.</p>
+                                </div>
+                            </div>
+                            <div class="exp-highlight-item">
+                                <div class="highlight-icon"><i class="fas fa-code"></i></div>
+                                <div class="highlight-text">
+                                    <h5>Programming & Fundamentals</h5>
+                                    <p>Deep expertise in basic programming concepts, computer fundamentals, and digital literacy education.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Experience Counter Cards -->
+                <div class="exp-counters" data-animate="fade-up" data-delay="200">
+                    <div class="counter-card card-3d">
+                        <div class="card-shine"></div>
+                        <div class="counter-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="counter-value" data-count="25">0</div>
+                        <div class="counter-label">Years of Teaching</div>
+                    </div>
+                    <div class="counter-card card-3d">
+                        <div class="card-shine"></div>
+                        <div class="counter-icon"><i class="fas fa-user-graduate"></i></div>
+                        <div class="counter-value" data-count="1000">0</div>
+                        <div class="counter-label">Students Mentored</div>
+                    </div>
+                    <div class="counter-card card-3d">
+                        <div class="card-shine"></div>
+                        <div class="counter-icon"><i class="fas fa-book-reader"></i></div>
+                        <div class="counter-value" data-count="50">0</div>
+                        <div class="counter-label">Batches Taught</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SKILLS SECTION ====== -->
     <section id="skills">
         <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">02</span>
-                <h2 class="section-title">My <span>Skills</span></h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-number">03</span>
+                <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+                <p class="section-subtitle">Expertise honed over 25+ years of dedicated teaching</p>
             </div>
-            <div class="skills-grid">
-                <div class="skill-category glass-card" data-tilt>
-                    <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
-                    <h3>Frontend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><i class="fab fa-html5"></i><span>HTML</span><div class="skill-bar"><div class="skill-fill" data-width="85"></div></div></div>
-                        <div class="skill-item"><i class="fab fa-css3-alt"></i><span>CSS</span><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div></div>
+            <div class="skills-grid" data-animate="fade-up" data-delay="200">
+                <div class="skill-card-3d card-3d" data-animate="fade-up" data-delay="0">
+                    <div class="card-shine"></div>
+                    <div class="skill-icon-wrap">
+                        <i class="fas fa-code"></i>
                     </div>
+                    <h4>Programming Fundamentals</h4>
+                    <p>Building strong basics in programming logic, algorithms, and problem-solving approaches.</p>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="90"></div>
+                    </div>
+                    <span class="skill-pct">Expert</span>
                 </div>
-                <div class="skill-category glass-card" data-tilt>
-                    <div class="skill-cat-icon"><i class="fas fa-terminal"></i></div>
-                    <h3>Programming</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><i class="fab fa-python"></i><span>Python</span><div class="skill-bar"><div class="skill-fill" data-width="60"></div></div></div>
-                        <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span><div class="skill-bar"><div class="skill-fill" data-width="40"></div></div></div>
+                <div class="skill-card-3d card-3d" data-animate="fade-up" data-delay="100">
+                    <div class="card-shine"></div>
+                    <div class="skill-icon-wrap">
+                        <i class="fas fa-desktop"></i>
                     </div>
+                    <h4>Computer Applications</h4>
+                    <p>Comprehensive knowledge of computer applications, operating systems, and software tools.</p>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="95"></div>
+                    </div>
+                    <span class="skill-pct">Expert</span>
                 </div>
-                <div class="skill-category glass-card" data-tilt>
-                    <div class="skill-cat-icon"><i class="fas fa-pen-nib"></i></div>
-                    <h3>Design</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><i class="fab fa-figma"></i><span>Figma (UI/UX)</span><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div></div>
+                <div class="skill-card-3d card-3d" data-animate="fade-up" data-delay="200">
+                    <div class="card-shine"></div>
+                    <div class="skill-icon-wrap">
+                        <i class="fas fa-file-word"></i>
                     </div>
+                    <h4>MS Office Suite</h4>
+                    <p>Proficient in Word, Excel, PowerPoint and other essential productivity tools.</p>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="92"></div>
+                    </div>
+                    <span class="skill-pct">Expert</span>
                 </div>
-                <div class="skill-category glass-card" data-tilt>
-                    <div class="skill-cat-icon"><i class="fas fa-robot"></i></div>
-                    <h3>Other</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><i class="fas fa-brain"></i><span>Generative AI Tools</span><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div></div>
+                <div class="skill-card-3d card-3d" data-animate="fade-up" data-delay="300">
+                    <div class="card-shine"></div>
+                    <div class="skill-icon-wrap">
+                        <i class="fas fa-comments"></i>
                     </div>
+                    <h4>Teaching & Communication</h4>
+                    <p>Exceptional ability to explain complex concepts in simple, engaging ways.</p>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="98"></div>
+                    </div>
+                    <span class="skill-pct">Master</span>
+                </div>
+                <div class="skill-card-3d card-3d" data-animate="fade-up" data-delay="400">
+                    <div class="card-shine"></div>
+                    <div class="skill-icon-wrap">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4>Digital Education Tools</h4>
+                    <p>Adapting to modern digital teaching tools and online education platforms.</p>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="85"></div>
+                    </div>
+                    <span class="skill-pct">Advanced</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
+    <!-- ====== PORTFOLIO SECTION ====== -->
+    <section id="portfolio">
         <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">03</span>
-                <h2 class="section-title">My <span>Projects</span></h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-number">04</span>
+                <h2 class="section-title">My <span class="gradient-text">Portfolio</span></h2>
+                <p class="section-subtitle">Showcasing my contributions to education</p>
             </div>
-            <div class="projects-grid">
-                <div class="project-card glass-card" data-tilt>
-                    <div class="project-number">01</div>
-                    <div class="project-icon"><i class="fas fa-school"></i></div>
-                    <h3>Camplink</h3>
-                    <p class="project-subtitle">College Management System</p>
-                    <p class="project-desc">A smart system designed to manage college activities efficiently. Simplifying student and admin tasks.</p>
-                    <div class="project-tags">
-                        <span>Frontend</span><span>System Design</span>
+            <div class="portfolio-showcase">
+                <div class="portfolio-card card-3d" data-animate="fade-up" data-delay="0">
+                    <div class="card-shine"></div>
+                    <div class="pf-image-wrap">
+                        <img src="teaching_materials.png" alt="Teaching Materials" loading="lazy">
+                        <div class="pf-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="pf-info">
+                        <span class="pf-cat"><i class="fas fa-book"></i> Teaching</span>
+                        <h3>Teaching Materials</h3>
+                        <p>Comprehensive study materials, notes, and resources developed over decades to simplify Computer Science learning.</p>
+                        <div class="pf-tags">
+                            <span>Notes</span><span>Guides</span><span>Tutorials</span>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card glass-card" data-tilt>
-                    <div class="project-number">02</div>
-                    <div class="project-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h3>Smart Attendance</h3>
-                    <p class="project-subtitle">Intelligent Attendance System</p>
-                    <p class="project-desc">An intelligent system to track and manage student attendance digitally. Focus on accuracy and automation.</p>
-                    <div class="project-tags">
-                        <span>Automation</span><span>Digital</span>
+                <div class="portfolio-card card-3d" data-animate="fade-up" data-delay="150">
+                    <div class="card-shine"></div>
+                    <div class="pf-image-wrap">
+                        <img src="classroom_activities.png" alt="Classroom Activities" loading="lazy">
+                        <div class="pf-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="pf-info">
+                        <span class="pf-cat"><i class="fas fa-users"></i> Activities</span>
+                        <h3>Classroom Activities</h3>
+                        <p>Interactive classroom sessions, practical demonstrations, and group learning activities for holistic development.</p>
+                        <div class="pf-tags">
+                            <span>Practicals</span><span>Group Work</span><span>Labs</span>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card glass-card" data-tilt>
-                    <div class="project-number">03</div>
-                    <div class="project-icon"><i class="fas fa-hospital"></i></div>
-                    <h3>DOC & AI</h3>
-                    <p class="project-subtitle">Smart OPD System</p>
-                    <p class="project-desc">A hospital-based system designed to improve OPD management using AI. Integrating AI for smarter healthcare solutions.</p>
-                    <div class="project-tags">
-                        <span>AI</span><span>Healthcare</span>
+                <div class="portfolio-card card-3d" data-animate="fade-up" data-delay="300">
+                    <div class="card-shine"></div>
+                    <div class="pf-image-wrap">
+                        <img src="student_projects.png" alt="Student Projects" loading="lazy">
+                        <div class="pf-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="pf-info">
+                        <span class="pf-cat"><i class="fas fa-project-diagram"></i> Projects</span>
+                        <h3>Student Projects</h3>
+                        <p>Guiding students in creating innovative projects that demonstrate their understanding of computer science concepts.</p>
+                        <div class="pf-tags">
+                            <span>Innovation</span><span>Mentoring</span><span>Exhibitions</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ====== CONTACT SECTION ====== -->
     <section id="contact">
         <div class="section-container">
-            <div class="section-header">
-                <span class="section-tag">04</span>
-                <h2 class="section-title">Get In <span>Touch</span></h2>
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-number">05</span>
+                <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="section-subtitle">Let's connect and discuss education, technology, or mentoring</p>
             </div>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <p class="contact-intro">I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
-                    <div class="contact-links">
-                        <a href="mailto:kesherwanipragati@gmail.com" class="contact-item glass-card">
-                            <i class="fas fa-envelope"></i>
-                            <div><h4>Email</h4><span>kesherwanipragati@gmail.com</span></div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/pragati-kesherwani-b09624379" target="_blank" class="contact-item glass-card">
-                            <i class="fab fa-linkedin"></i>
-                            <div><h4>LinkedIn</h4><span>Pragati Kesherwani</span></div>
-                        </a>
-                        <a href="https://github.com/rajni12071985-debug" target="_blank" class="contact-item glass-card">
-                            <i class="fab fa-github"></i>
-                            <div><h4>GitHub</h4><span>rajni12071985-debug</span></div>
-                        </a>
-                        <a href="https://www.instagram.com/itsp_rag" target="_blank" class="contact-item glass-card">
-                            <i class="fab fa-instagram"></i>
-                            <div><h4>Instagram</h4><span>@itsp_rag</span></div>
-                        </a>
+            <div class="contact-wrapper">
+                <!-- Contact Info Cards -->
+                <div class="contact-info-side" data-animate="fade-up" data-delay="0">
+                    <div class="contact-intro-card card-3d">
+                        <div class="card-shine"></div>
+                        <h3>Let's Connect</h3>
+                        <p>I'm always open to discussing educational ideas, mentoring opportunities, or collaborating on initiatives to improve student learning.</p>
+                        <div class="contact-details">
+                            <a href="mailto:ram97949794@gmail.com" class="contact-detail-item">
+                                <div class="cd-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="cd-text">
+                                    <span class="cd-label">Email</span>
+                                    <span class="cd-value">ram97949794@gmail.com</span>
+                                </div>
+                            </a>
+                            <a href="tel:+919794134633" class="contact-detail-item">
+                                <div class="cd-icon"><i class="fas fa-phone-alt"></i></div>
+                                <div class="cd-text">
+                                    <span class="cd-label">Phone</span>
+                                    <span class="cd-value">+91 9794134633</span>
+                                </div>
+                            </a>
+                            <div class="contact-detail-item">
+                                <div class="cd-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="cd-text">
+                                    <span class="cd-label">Location</span>
+                                    <span class="cd-value">Prayagraj, India</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <!-- Contact Form -->
+                <div class="contact-form-side" data-animate="fade-up" data-delay="200">
+                    <form id="contact-form" class="contact-form card-3d">
+                        <div class="card-shine"></div>
+                        <h3>Send a Message</h3>
+                        <div class="form-group">
+                            <label for="contact-name">Your Name</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="contact-name" name="name" placeholder="Enter your name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Your Email</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="contact-email" name="email" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Your Message</label>
+                            <div class="input-wrap textarea-wrap">
+                                <i class="fas fa-comment-dots"></i>
+                                <textarea id="contact-message" name="message" placeholder="Write your message..." rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <div class="form-status" id="form-status"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -228,8 +458,16 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p class="footer-quote">"Creating smart solutions with creativity and technology."</p>
-            <p>&copy; 2026 Pragati Kesherwani. All rights reserved.</p>
+            <div class="footer-logo">RK<span>.</span></div>
+            <p class="footer-quote">"Empowering generations through knowledge, technology, and dedicated mentorship."</p>
+            <div class="footer-links">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Ram Kumar Kesherwani. Crafted with <i class="fas fa-heart"></i> and 3D magic.</p>
         </div>
     </footer>
 
